@@ -1,0 +1,39 @@
+{
+    "newUser": {
+        "credentials": {
+            "emailAdress": "annaBLUSA@gmail.com",
+            "password": "13tzG!5",
+            "name": "AnnB"
+        },
+        "personalDetails":{
+            "firstName": "Anna",
+            "lastName": "Jones",
+            "birthDay": 15,
+            "month": "March",
+            "year": "1991",
+            "companyName": "Honda",
+            "address": "Long Island 5, TX USA",
+            "country": "Canada",
+            "state": "Toronto",
+            "city": "Ottawa",
+            "zipCode": 8047,
+            "mobileNumber": 20564523562
+        }
+    },
+    "textMessage": {
+        "createdAccount": "Account Created!",
+        "deletedAccount": "Account Deleted!"
+    },
+    "navigationBarItems": {
+        "homeItem1": "Home",
+        "productsItem2": "Products",
+        "cartItem3": "Cart",
+        "logoutItem4": "Logout",
+        "deleteAccountItem5": "Delete Account",
+        "testCasesItem6": "Test Cases",
+        "ApiTesting7": "API Testing",
+        "videoTutotialsItem8": "Video Tutorials",
+        "contactUsItem9": "Conract us",
+        "loggedInAsItem10": "Logged in as"
+    }
+}
