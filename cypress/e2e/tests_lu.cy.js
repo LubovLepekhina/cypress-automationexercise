@@ -6,6 +6,27 @@ describe('template spec', () => {
     // 2. Navigate to url 'http://automationexercise.com'
     cy.visit('/')
   })
+  it.only('3. Login User with incorrect email and password', () => {
+    // 3. Verify that home page is visible successfully
+    cy.url().should('include', 'https://automationexercise.com')
+    cy.title().should('eq', 'Automation Exercise')
+
+    // 4. Click on 'Signup / Login' button
+    cy.get("a[href$='login']").click()
+
+    // 5. Verify 'Login to your account' is visible
+    cy.get('h2').contains('Login to your account').should('be.visible')
+
+    // 6. Enter incorrect email address and password
+    cy.get("input[data-qa='login-email']").type('example@example.com')
+    cy.get("input[data-qa='login-password']").type('passexample')
+
+    // 7. Click 'login' button
+    cy.get('button').contains('Login').click()
+
+    // 8. Verify error 'Your email or password is incorrect!' is visible
+    cy.contains('p', 'Your email or password is incorrect!').should('be.visible')
+  })
   it('9. Search Product', () => {
     // 3. Verify that home page is visible successfully
     cy.url().should('include', 'https://automationexercise.com')
