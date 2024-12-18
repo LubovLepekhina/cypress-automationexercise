@@ -19,6 +19,8 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
+import 'cypress-map'
+
 //uncaught:exception
 //To conditionally turn off uncaught exception handling for a certain error
 before(()=>{
