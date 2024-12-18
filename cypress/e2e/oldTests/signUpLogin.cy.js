@@ -1,7 +1,7 @@
 /// <reference types='cypress' />
-import { newUser } from "../fixtures/signUpLogin.json"
-import { textMessage } from "../fixtures/signUpLogin.json"
-import { navigationBarItems } from "../fixtures/signUpLogin.json"
+import { newUser } from "../../fixtures/signUpLogin.json"
+import { textMessage } from "../../fixtures/signUpLogin.json"
+import { navigationBarItems } from "../../fixtures/signUpLogin.json"
 
 describe('Register User', () => {
     beforeEach(() => {
