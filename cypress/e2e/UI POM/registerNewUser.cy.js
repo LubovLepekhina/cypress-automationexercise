@@ -4,11 +4,12 @@ import LoginPage from '../../pageObjects/loginPage'
 import HomePage  from '../../pageObjects/homePage'
 import SignupPage from '../../pageObjects/signupPage'
 import AccountCreatedPage from '../../pageObjects/accountCreatedPage'
-import Header from '../../pageObjects/header'
+import Header from '../../pageObjects/headerPage'
 
 import genData from '../../fixtures/genData'
-import accountCreatedData from '../../fixtures/accountCreatedPage.json'
-import headerData from '../../fixtures/header.json'
+import accountCreatedData from '../../fixtures/accountCreatedPageData.json'
+import headerData from '../../fixtures/headerData.json'
+import {signupPageErrorData} from '../../fixtures/errorData.json'
 
 const loginPage = new LoginPage()
 const homePage = new HomePage()
@@ -16,7 +17,7 @@ const signupPage = new SignupPage()
 const accountCreatedPage = new AccountCreatedPage()
 const header = new Header()
 
-let newUser = genData.newUser()
+// let newUser = genData.newUser()
 
 beforeEach('visit base URL', () => {
     cy.visit('/')
@@ -24,30 +25,10 @@ beforeEach('visit base URL', () => {
 
 describe('register a new user', () => {
     it('creates a new user', () => {
-        homePage
-            .clickSighUpLoginLink()
-        loginPage
-            .typeNewUserName(newUser.name)
-            .typeNewUserEmail(newUser.emailAddress)
-            .clickSignUpButton()
-        signupPage 
-            .checkRandomTitleRadioButton()
-            .verifyNameInput(newUser.name)  
-            .verifyEmailInput(newUser.emailAddress)
-            .typePassword(newUser.password)
-            .selectDateOfBirth(newUser.birthDate.dateOfBirth)
-            .selectMonthOfBirth(newUser.birthDate.monthOfBirth)
-            .selectYearOfBirth(newUser.birthDate.yearOfBirth)
-            .typeFirstName(newUser.firstName)
-            .typeLastName(newUser.lastName)
-            .typeCompany(newUser.company)
-            .typeAddress(newUser.address)
-            .selectCountry(newUser.country)
-            .typeState(newUser.state)
-            .typeCity(newUser.city)
-            .typeZipCode(newUser.zipCode)
-            .typeMobileNumber(newUser.mobileNumber)
-            .clickCreateAccountButton()
+        let newUser = genData.newUser()
+        
+        cy.newUserSignUp(newUser)
+        cy.createAccount(newUser)
             
         accountCreatedPage.getHeader().should('contain', accountCreatedData.pageText.header)
         accountCreatedPage.getPageTextLine1().should('contain', accountCreatedData.pageText.text_1)
@@ -59,5 +40,23 @@ describe('register a new user', () => {
         
         cy.log('delete an account')
         header.clickDeleteAccountLink()
+    })
+
+    it('register User with existing email', () => {
+        let newUser = genData.newUser()
+        
+        cy.log('preconditions')
+        cy.newUserSignUp(newUser)
+        cy.createAccount(newUser)
+        accountCreatedPage.getHeader().should('contain', accountCreatedData.pageText.header)
+        accountCreatedPage.clickContinueButton()
+        cy.contains('a', `Logged in as ${newUser.name}`).should('be.visible')
+        header.clickLogOutLink()
+
+        cy.log('body')
+        cy.newUserSignUp(newUser)        
+        cy.contains('p', signupPageErrorData.errorText).should('be.visible')
+            .and('have.css', 'color', signupPageErrorData.cssColor)
+
     })
 })

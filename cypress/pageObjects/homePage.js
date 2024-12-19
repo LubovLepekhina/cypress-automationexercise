@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import Header from './header'
+import Header from './headerPage'
 
 class HomePage extends Header {
     

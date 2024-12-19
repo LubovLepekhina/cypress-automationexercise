@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import Header from "./header";
+import Header from "./headerPage";
 
 class SignupPage extends Header {
     getTitleRadioButtons = () => cy.get('input[type="radio"]')
