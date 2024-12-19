@@ -7,9 +7,9 @@ import AccountCreatedPage from '../../pageObjects/accountCreatedPage'
 import Header from '../../pageObjects/headerPage'
 
 import genData from '../../fixtures/genData'
-import accountCreatedData from '../../fixtures/accountCreatedPage.json'
-import headerData from '../../fixtures/header.json'
-import errorData from '../../fixtures/errorData.json'
+import accountCreatedData from '../../fixtures/accountCreatedPageData.json'
+import headerData from '../../fixtures/headerData.json'
+import {signupPageErrorData} from '../../fixtures/errorData.json'
 
 const loginPage = new LoginPage()
 const homePage = new HomePage()
@@ -55,8 +55,8 @@ describe('register a new user', () => {
 
         cy.log('body')
         cy.newUserSignUp(newUser)        
-        cy.contains('p', errorData.signupError).should('be.visible')
-            .and('have.css', 'color', errorData.messageColor)
+        cy.contains('p', signupPageErrorData.errorText).should('be.visible')
+            .and('have.css', 'color', signupPageErrorData.cssColor)
 
     })
 })
