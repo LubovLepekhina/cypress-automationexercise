@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import Header from "./header"
+import Header from "./headerPage"
 
 class AccountCreatedPage extends Header {
     getHeader = () => cy.get('h2[data-qa="account-created"]')
