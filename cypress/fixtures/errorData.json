@@ -1,0 +1,6 @@
+{
+    "signupPageErrorData" : {
+      "errorText" : "Email Address already exist!",
+      "cssColor": "rgb(255, 0, 0)"
+    }
+}
