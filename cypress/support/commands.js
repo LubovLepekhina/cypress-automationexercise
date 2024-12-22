@@ -61,3 +61,98 @@ Cypress.Commands.add('createAccount', (newUser) => {
         .typeMobileNumber(newUser.mobileNumber)
         .clickCreateAccountButton()
 })
+
+Cypress.Commands.add('createAccountAPI', (newUser) => {
+    function updateCsrfToken() {
+        cy.getCookie('csrftoken').then((cookie) => {
+            if (cookie) {
+                Cypress.env('csrfToken', cookie.value);
+                cy.log(`CSRF Token: ${Cypress.env('csrfToken')}`);
+            } else {
+                cy.log('CSRF Token cookie not found!');
+            }
+        });
+    }
+
+    function getSessionId() {
+        cy.getCookie('sessionid').then((cookie) => {
+            if (cookie) {
+                Cypress.env('sessionid', cookie.value);
+                cy.log(`Session ID: ${Cypress.env('sessionid')}`);
+            } else {
+                cy.log('Session ID cookie not found!');
+            }
+        });
+    }
+
+    function getCSRFmiddlewaretoken(response) {
+        const matches = response.body.match(/<input[^>]*name=["']csrfmiddlewaretoken["'][^>]*value=["'](.+?)["']/);
+        const csrfmiddlewaretoken = matches ? matches[1] : '';
+        Cypress.env('csrfmiddlewaretoken', csrfmiddlewaretoken);
+        cy.log(`csrfmiddlewaretoken: ${Cypress.env('csrfmiddlewaretoken')}`);
+    }
+
+    cy.request({
+        method: 'GET',
+        url: '/signup',
+    }).then(response => {
+        updateCsrfToken(response)
+        getCSRFmiddlewaretoken(response)
+        cy.request({
+            method: 'POST',
+            url: '/signup',
+            form: true,
+            body: {
+                csrfmiddlewaretoken: Cypress.env('csrfmiddlewaretoken'),
+                name: newUser.name,
+                email: newUser.emailAddress,
+                form_type:'signup',
+            },
+            headers: {
+                'cookie': `csrftoken=${Cypress.env('csrfToken')};`,
+                'referer': 'https://automationexercise.com/login'
+            },
+            failOnStatusCode: false
+        }).then((response) => {
+            updateCsrfToken();
+            getSessionId();
+            getCSRFmiddlewaretoken(response);
+            cy.request({
+                method: 'POST',
+                url: '/signup',
+                form: true,
+                body: {
+                    csrfmiddlewaretoken: Cypress.env('csrfmiddlewaretoken'),
+                    title:'Mr',
+                    name: newUser.name,
+                    email_address: newUser.emailAddress,
+                    password: newUser.password,
+                    days: newUser.birthDate.dateOfBirth,
+                    months: newUser.birthDate.monthOfBirth,
+                    years: newUser.birthDate.yearOfBirth,
+                    newsletter : 1,
+                    optin : 1,
+                    first_name: newUser.firstName,
+                    last_name: newUser.lastName,
+                    company: newUser.company,
+                    address1: newUser.address,
+                    address2: newUser.address,
+                    country: newUser.country,
+                    state: newUser.state,
+                    city: newUser.city,
+                    zipcode: newUser.zipCode,
+                    mobile_number: newUser.mobileNumber,
+                    form_type:'create_account',
+                },
+                headers: {
+                    'cookie': `csrftoken=${Cypress.env('csrfToken')}; sessionid=${Cypress.env('sessionId')}`,
+                    'referer':'https://automationexercise.com/login'
+                },
+            }).then((response) => {
+                updateCsrfToken();
+                getSessionId();
+                getCSRFmiddlewaretoken(response);
+            })
+        })
+    })
+})
