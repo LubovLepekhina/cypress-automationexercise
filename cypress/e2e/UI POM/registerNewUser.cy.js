@@ -60,7 +60,7 @@ describe('register a new user', () => {
 
     })
 
-    it.only('Create new user via API POST request', () => {
+    it('Create new user via API POST request', () => {
         let newUser = genData.newUser()
         cy.createAccountAPI(newUser)
         cy.visit('/').log('delete an account')
