@@ -63,27 +63,6 @@ Cypress.Commands.add('createAccount', (newUser) => {
 })
 
 Cypress.Commands.add('createAccountAPI', (newUser) => {
-    function updateCsrfToken() {
-        cy.getCookie('csrftoken').then((cookie) => {
-            if (cookie) {
-                Cypress.env('csrfToken', cookie.value);
-                cy.log(`CSRF Token: ${Cypress.env('csrfToken')}`);
-            } else {
-                cy.log('CSRF Token cookie not found!');
-            }
-        });
-    }
-
-    function getSessionId() {
-        cy.getCookie('sessionid').then((cookie) => {
-            if (cookie) {
-                Cypress.env('sessionid', cookie.value);
-                cy.log(`Session ID: ${Cypress.env('sessionid')}`);
-            } else {
-                cy.log('Session ID cookie not found!');
-            }
-        });
-    }
 
     function getCSRFmiddlewaretoken(response) {
         const matches = response.body.match(/<input[^>]*name=["']csrfmiddlewaretoken["'][^>]*value=["'](.+?)["']/);
@@ -96,7 +75,6 @@ Cypress.Commands.add('createAccountAPI', (newUser) => {
         method: 'GET',
         url: '/signup',
     }).then(response => {
-        updateCsrfToken(response)
         getCSRFmiddlewaretoken(response)
         cy.request({
             method: 'POST',
@@ -114,8 +92,6 @@ Cypress.Commands.add('createAccountAPI', (newUser) => {
             },
             failOnStatusCode: false
         }).then((response) => {
-            updateCsrfToken();
-            getSessionId();
             getCSRFmiddlewaretoken(response);
             cy.request({
                 method: 'POST',
@@ -149,8 +125,6 @@ Cypress.Commands.add('createAccountAPI', (newUser) => {
                     'referer':'https://automationexercise.com/login'
                 },
             }).then((response) => {
-                updateCsrfToken();
-                getSessionId();
                 getCSRFmiddlewaretoken(response);
             })
         })
