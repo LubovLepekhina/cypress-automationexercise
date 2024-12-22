@@ -59,4 +59,11 @@ describe('register a new user', () => {
             .and('have.css', 'color', signupPageErrorData.cssColor)
 
     })
+
+    it('Create new user via API POST request', () => {
+        let newUser = genData.newUser()
+        cy.createAccountAPI(newUser)
+        cy.visit('/').log('delete an account')
+        header.clickDeleteAccountLink()
+    })
 })
