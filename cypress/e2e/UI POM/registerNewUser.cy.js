@@ -10,6 +10,7 @@ import genData from '../../fixtures/genData'
 import accountCreatedData from '../../fixtures/accountCreatedPageData.json'
 import headerData from '../../fixtures/headerData.json'
 import {signupPageErrorData} from '../../fixtures/errorData.json'
+import {accountInformation} from '../../fixtures/signupPageData.json'
 
 const loginPage = new LoginPage()
 const homePage = new HomePage()
@@ -66,4 +67,18 @@ describe('register a new user', () => {
         cy.visit('/').log('delete an account')
         header.clickDeleteAccountLink()
     })
+
+    accountInformation.inputsList.forEach(inputName => {
+        it(`The entered text is displayed correctly in the ${inputName} field`, () => {
+            let newUser = genData.newUser()
+            let methodName = `get${inputName}Input`
+            let genDataKey = inputName[0].toLowerCase() + inputName.slice(1)
+
+            cy.newUserSignUp(newUser)
+            
+            signupPage[methodName]().type(newUser[genDataKey])
+                .should('have.value', newUser[genDataKey])
+        })
+    })
+    
 })
