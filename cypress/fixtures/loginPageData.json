@@ -1,0 +1,8 @@
+{
+    "loginForm" : {
+       "headerText" : "Login to your account"
+    },
+    "signupForm" : {
+        "headerText" : "New User Signup!"
+    }
+}

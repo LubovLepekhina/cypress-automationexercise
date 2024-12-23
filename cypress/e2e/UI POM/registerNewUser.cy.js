@@ -12,8 +12,6 @@ import headerData from '../../fixtures/headerData.json'
 import {signupPageErrorData} from '../../fixtures/errorData.json'
 import {accountInformation} from '../../fixtures/signupPageData.json'
 
-import { ENDPOINTS } from '../../support/endpoints'
-
 const loginPage = new LoginPage()
 const homePage = new HomePage()
 const signupPage = new SignupPage()
