@@ -1,5 +1,6 @@
 {
     "accountInformation" : {
+        "title" : ["Mr.", "Mrs."],
         "monthOfBirth" : [
             "January",
             "February",

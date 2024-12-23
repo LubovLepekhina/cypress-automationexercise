@@ -80,11 +80,38 @@ describe('register a new user', () => {
                 .should('have.value', newUser[genDataKey])
         })
     })
-    
 
-    it('redirects to login page', () => {
-        homePage.clickSighUpLoginLink()
-        cy.url().should('eq', Cypress.config('baseUrl') + ENDPOINTS.LOGIN)
+    accountInformation.title.forEach((title, idx) => {
+        it(`checks ${title} radio button`, () => {
+            let newUser = genData.newUser()
+            cy.newUserSignUp(newUser)
+            signupPage.getTitleRadioButtons().eq(idx)
+                .should('be.visible')
+                .and('not.be.checked')
+                .check()
+                .should('be.checked')
+        })
+    })
+
+    accountInformation.title.forEach((title, idx) => {
+        it(`verify ${title} radio button label text`, () => {
+            let newUser = genData.newUser()
+            cy.newUserSignUp(newUser)
+            signupPage.getLabelTitleRadioButtons().eq(idx)
+                .should('be.visible')
+                .invoke('text').then(($text) => {
+                    expect($text.trim()).to.eq(title)
+                })
+        })
+    })
+
+    it('Mrs. radio button should be unchecked if Mr. is checked and vv', () => {
+        let newUser = genData.newUser()
+            cy.newUserSignUp(newUser)
+            signupPage.getTitleRadioButtons().should('not.be.checked')
+            signupPage.getTitleRadioButtons().eq(0).should('not.be.checked').check().should('be.checked')
+            signupPage.getTitleRadioButtons().eq(1).should('not.be.checked').check().should('be.checked')
+            signupPage.getTitleRadioButtons().eq(0).should('not.be.checked')
     })
 
 })
