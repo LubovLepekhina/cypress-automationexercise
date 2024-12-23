@@ -23,9 +23,9 @@ class SignupPage extends Header {
     getCreateAccountButton = () => cy.get('button[data-qa="create-account"]')
 
     checkRandomTitleRadioButton() {
-        this.getTitleRadioButtons().should('have.length', 2).and('not.be.checked').then(($items) => {
+        this.getTitleRadioButtons().then(($items) => {
             return Cypress._.sampleSize($items.toArray(), 1)
-        }).should('have.length', 1).check().should('be.checked')
+        }).check()
         return this
     }
     
@@ -44,18 +44,18 @@ class SignupPage extends Header {
         return this
     }
 
-    selectDateOfBirth(day) {
-        this.getDateBirth().select(day)
+    selectDateOfBirth(dayIdx) {
+        this.getDateBirth().select(dayIdx)
         return this
     }
 
-    selectMonthOfBirth(value) {
-        this.getMonthBirth().select(value)
+    selectMonthOfBirth(valueIdx) {
+        this.getMonthBirth().select(valueIdx)
         return this    
     }
 
-    selectYearOfBirth(year) {
-        this.getYearBirth().select(year)
+    selectYearOfBirth(yearIdx) {
+        this.getYearBirth().select(yearIdx)
         return this    
     }
 

@@ -11,13 +11,13 @@ import accountCreatedData from '../../fixtures/accountCreatedPageData.json'
 import headerData from '../../fixtures/headerData.json'
 import {signupPageErrorData} from '../../fixtures/errorData.json'
 
+import { ENDPOINTS } from '../../support/endpoints'
+
 const loginPage = new LoginPage()
 const homePage = new HomePage()
 const signupPage = new SignupPage()
 const accountCreatedPage = new AccountCreatedPage()
 const header = new Header()
-
-// let newUser = genData.newUser()
 
 beforeEach('visit base URL', () => {
     cy.visit('/')
@@ -66,4 +66,10 @@ describe('register a new user', () => {
         cy.visit('/').log('delete an account')
         header.clickDeleteAccountLink()
     })
+
+    it('redirects to login page', () => {
+        homePage.clickSighUpLoginLink()
+        cy.url().should('eq', Cypress.config('baseUrl') + ENDPOINTS.LOGIN)
+    })
+
 })
