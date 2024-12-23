@@ -4,6 +4,7 @@ import Header from "./headerPage";
 
 class SignupPage extends Header {
     getTitleRadioButtons = () => cy.get('input[type="radio"]')
+    getLabelTitleRadioButtons = () => cy.get('label[for*="id_gender"]')
     getNameInput = () => cy.get('input#name')
     getEmailAddressInput = () => cy.get('input#email')
     getPasswordInput = () => cy.get('input[data-qa="password"]')
