@@ -18,8 +18,6 @@ const signupPage = new SignupPage()
 const accountCreatedPage = new AccountCreatedPage()
 const header = new Header()
 
-// let newUser = genData.newUser()
-
 beforeEach('visit base URL', () => {
     cy.visit('/')
 })
