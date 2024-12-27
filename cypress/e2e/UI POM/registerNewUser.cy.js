@@ -193,4 +193,20 @@ describe('register a new user', () => {
             .should('eq', accountInformation.checkboxLabel.specialOffer)
     })
 
+    it('Checking that the browser sends an error message', ()=> {
+        let newUser = genData.newUser()
+        header
+            .clickSighUpLoginLink()
+        loginPage
+            .typeNewUserName(newUser.name)
+            .typeNewUserEmail(`${newUser.name}@`)
+        loginPage
+            .getNewUserSignupEmailAddressInput()
+            .invoke("attr", "required")
+            .should('exist')
+        loginPage
+            .getNewUserSignupEmailAddressInput()
+            .invoke("prop", "validationMessage")
+            .should("include", `${newUser.name}@`); 
+   })
 })
