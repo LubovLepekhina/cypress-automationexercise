@@ -3,6 +3,8 @@
 import Header from "./headerPage";
 
 class SignupPage extends Header {
+    getHeadingLoginForm = () => cy.get('.login-form h2:first-child')
+    getHeadingAddressInformation = () => cy.get('form h2.title')
     getTitleRadioButtons = () => cy.get('input[type="radio"]')
     getLabelTitleRadioButtons = () => cy.get('label[for*="id_gender"]')
     getNameInput = () => cy.get('input#name')
@@ -12,6 +14,10 @@ class SignupPage extends Header {
     getAllDatesOptions = () => cy.get('#days option:not([value=""])')
     getMonthBirth = () => cy.get('select[data-qa="months"]')
     getYearBirth = () => cy.get('select[data-qa="years"]')
+    getCheckboxNewsletter = () => cy.get('input[type="checkbox"]#newsletter')
+    getCheckboxNewsletterLabel = () => cy.get('.checkbox label[for="newsletter"]')
+    getSpecialOfferCheckbox = () => cy.get('input[type="checkbox"]#optin')
+    getSpecialOfferCheckboxLabel = () => cy.get('.checkbox label[for="optin"]')
     getFirstNameInput = () => cy.get('input[data-qa="first_name"]')
     getLastNameInput = () => cy.get('input[data-qa="last_name"]')
     getCompanyInput = () => cy.get('input[data-qa="company"]')
@@ -107,6 +113,16 @@ class SignupPage extends Header {
 
     clickCreateAccountButton() {
         this.getCreateAccountButton().click()
+        return this
+    }
+
+    clickNewsletterCheckbox() {
+        this.getCheckboxNewsletter().check()
+        return this
+    }
+
+    clickSpecialOfferCheckbox() {
+        this.getSpecialOfferCheckbox().check()
         return this
     }
 
