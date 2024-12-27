@@ -3,6 +3,8 @@
 import Header from "./headerPage";
 
 class SignupPage extends Header {
+    getHeadingLoginForm = () => cy.get('.login-form h2:first-child')
+    getHeadingAddressInformation = () => cy.get('form h2.title')
     getTitleRadioButtons = () => cy.get('input[type="radio"]')
     getLabelTitleRadioButtons = () => cy.get('label[for*="id_gender"]')
     getNameInput = () => cy.get('input#name')
@@ -111,6 +113,16 @@ class SignupPage extends Header {
 
     clickCreateAccountButton() {
         this.getCreateAccountButton().click()
+        return this
+    }
+
+    clickNewsletterCheckbox() {
+        this.getCheckboxNewsletter().check()
+        return this
+    }
+
+    clickSpecialOfferCheckbox() {
+        this.getSpecialOfferCheckbox().check()
         return this
     }
 

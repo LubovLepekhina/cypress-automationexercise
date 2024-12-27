@@ -1,4 +1,14 @@
 {
+    "signupForm" : {
+        "heading_1" : {
+            "text" : "Enter Account Information",
+            "cssColor": "rgb(254, 152, 15)"
+        },
+        "heading_2" : {
+            "text" : "Address Information",
+            "cssColor": "rgb(254, 152, 15)"
+        }
+    },
     "accountInformation" : {
         "title" : ["Mr.", "Mrs."],
         "monthOfBirth" : [

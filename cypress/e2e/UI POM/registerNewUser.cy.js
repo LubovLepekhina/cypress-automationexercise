@@ -11,6 +11,8 @@ import accountCreatedData from '../../fixtures/accountCreatedPageData.json'
 import headerData from '../../fixtures/headerData.json'
 import {signupPageErrorData} from '../../fixtures/errorData.json'
 import {accountInformation} from '../../fixtures/signupPageData.json'
+import {signupForm} from '../../fixtures/signupPageData.json'
+import loginPageData from '../../fixtures/loginPageData.json'
 
 const loginPage = new LoginPage()
 const homePage = new HomePage()
@@ -26,16 +28,53 @@ describe('register a new user', () => {
     it('creates a new user', () => {
         let newUser = genData.newUser()
         
-        cy.newUserSignUp(newUser)
-        cy.createAccount(newUser)
-            
-        accountCreatedPage.getHeader().should('contain', accountCreatedData.pageText.header)
-        accountCreatedPage.getPageTextLine1().should('contain', accountCreatedData.pageText.text_1)
-        accountCreatedPage.getPageTextLine2().should('contain', accountCreatedData.pageText.text_2)
-        
+        homePage
+           .clickSighUpLoginLink()
+        loginPage
+           .getHeadingNewUserSignUp()
+                .should('have.text', loginPageData.signupForm.headerText)  
+                .and('have.css', 'color', loginPageData.signupForm.cssColor) 
+        loginPage
+           .typeNewUserName(newUser.name)
+           .typeNewUserEmail(newUser.emailAddress)
+           .clickSignUpButton()
+        signupPage
+           .getHeadingLoginForm()
+                .should('have.text', signupForm.heading_1.text) 
+                .and('have.css', 'color', signupForm.heading_1.cssColor)
+        signupPage
+            .checkRandomTitleRadioButton()
+            .verifyNameInput(newUser.name)
+            .verifyEmailInput(newUser.emailAddress)
+            .typePassword(newUser.password)
+            .selectDateOfBirth(newUser.birthDate.dateOfBirth)
+            .selectMonthOfBirth(newUser.birthDate.monthOfBirth)
+            .selectYearOfBirth(newUser.birthDate.yearOfBirth)
+            .getHeadingAddressInformation()
+                .should('have.text', signupForm.heading_2.text) 
+                .and('have.css', 'color', signupForm.heading_2.cssColor)
+        signupPage
+            .clickNewsletterCheckbox()
+            .clickSpecialOfferCheckbox()
+            .typeFirstName(newUser.firstName)
+            .typeLastName(newUser.lastName)
+            .typeCompany(newUser.company)
+            .typeAddress(newUser.address)
+            .selectCountry(newUser.country)
+            .typeState(newUser.state)
+            .typeCity(newUser.city)
+            .typeZipCode(newUser.zipCode)
+            .typeMobileNumber(newUser.mobileNumber)
+            .clickCreateAccountButton();   
+        accountCreatedPage
+            .getHeader().should('contain', accountCreatedData.pageText.header)
+        accountCreatedPage
+            .getPageTextLine1().should('contain', accountCreatedData.pageText.text_1)
+        accountCreatedPage
+            .getPageTextLine2().should('contain', accountCreatedData.pageText.text_2)
         accountCreatedPage.clickContinueButton()
-
-        header.getLoggedinAs().should('contain', headerData.navbarItems.registeredUser.slice(-1) + `${newUser.name}`)
+        header
+            .getLoggedinAs().should('contain', headerData.navbarItems.registeredUser.slice(-1) + `${newUser.name}`)
         
         cy.log('delete an account')
         header.clickDeleteAccountLink()
@@ -55,7 +94,7 @@ describe('register a new user', () => {
         cy.log('body')
         cy.newUserSignUp(newUser)        
         cy.contains('p', signupPageErrorData.errorText).should('be.visible')
-            .and('have.css', 'color', signupPageErrorData.cssColor)
+           .and('have.css', 'color', signupPageErrorData.cssColor)
 
     })
 

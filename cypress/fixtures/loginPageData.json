@@ -1,8 +1,10 @@
 {
     "loginForm" : {
-       "headerText" : "Login to your account"
+       "headerText" : "Login to your account",
+       "cssColor": "rgb(105, 103, 99)"
     },
     "signupForm" : {
-        "headerText" : "New User Signup!"
+        "headerText" : "New User Signup!",
+        "cssColor": "rgb(105, 103, 99)"
     }
 }

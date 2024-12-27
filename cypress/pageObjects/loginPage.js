@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 class LoginPage {
+    getHeadingNewUserSignUp = () => cy.get('.signup-form h2')
     getNewUserSignupNameInput = () => cy.get('input[data-qa="signup-name"]')
     getNewUserSignupEmailAddressInput = () => cy.get('input[data-qa="signup-email"]')
     getSignUpButton = () => cy.get('[data-qa="signup-button"]')
