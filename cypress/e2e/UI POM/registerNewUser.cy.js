@@ -112,4 +112,46 @@ describe('register a new user', () => {
             signupPage.getTitleRadioButtons().eq(0).should('not.be.checked')
     })
 
+    it('checks newsletter check box', () => {
+        let newUser = genData.newUser()
+        cy.newUserSignUp(newUser)
+        signupPage.getCheckboxNewsletter()
+            .should('be.visible')
+            .and('not.be.checked')
+            .check()
+            .should('be.checked')
+            .uncheck()
+            .should('not.be.checked')
+    })
+
+    it('verify newsletter check box label text', () => {
+        let newUser = genData.newUser()
+        cy.newUserSignUp(newUser)
+        signupPage.getCheckboxNewsletterLabel()
+            .should('be.visible')
+            .invoke('text')
+            .should('eq', accountInformation.checkboxLabel.newsletter)
+    })
+
+    it('checks special offer check box', () => {
+        let newUser = genData.newUser()
+        cy.newUserSignUp(newUser)
+        signupPage.getSpecialOfferCheckbox()
+            .should('be.visible')
+            .and('not.be.checked')
+            .check()
+            .should('be.checked')
+            .uncheck()
+            .should('not.be.checked')
+    })
+
+    it('verify special offer check box label text', () => {
+        let newUser = genData.newUser()
+        cy.newUserSignUp(newUser)
+        signupPage.getSpecialOfferCheckboxLabel()
+            .should('be.visible')
+            .invoke('text')
+            .should('eq', accountInformation.checkboxLabel.specialOffer)
+    })
+
 })
