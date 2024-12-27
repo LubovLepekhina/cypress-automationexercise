@@ -15,6 +15,10 @@
             "November",
             "December"
         ],
+        "checkboxLabel" : {
+            "newsletter" : "Sign up for our newsletter!",
+            "specialOffer" : "Receive special offers from our partners!"
+        },
         "country" : ["India", "United States", "Canada", "Australia", "Israel", "New Zealand", "Singapore"],
         "inputsList": ["Password", "FirstName", "LastName", "Company", "Address", "State", "City", "ZipCode", "MobileNumber"]
     }
