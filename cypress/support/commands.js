@@ -130,3 +130,10 @@ Cypress.Commands.add('createAccountAPI', (newUser) => {
         })
     })
 })
+
+Cypress.Commands.add('getData', (endpoint) => {
+    return cy.request({
+        method: 'GET',
+        url: '/' + endpoint
+    })
+})
