@@ -286,7 +286,7 @@ describe('register a new user', () => {
             });
     });
 
-    it('Check if the selected country is displayed in the “Date of birth” field during registration', ()=> {
+    it('Check if the selected country is displayed in the “Country” field during registration', ()=> {
         let newUser = genData.newUser()
         header
             .clickSighUpLoginLink()
