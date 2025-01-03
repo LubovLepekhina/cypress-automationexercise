@@ -10,10 +10,16 @@ class SignupPage extends Header {
     getNameInput = () => cy.get('input#name')
     getEmailAddressInput = () => cy.get('input#email')
     getPasswordInput = () => cy.get('input[data-qa="password"]')
-    getDateBirth = () => cy.get('select[data-qa="days"]')
     getAllDatesOptions = () => cy.get('#days option:not([value=""])')
+    getDateBirth = () => cy.get('select[data-qa="days"]')
     getMonthBirth = () => cy.get('select[data-qa="months"]')
     getYearBirth = () => cy.get('select[data-qa="years"]')
+    getDateBirthOptions = () => this.getDateBirth().find('option');
+    getMonthBirthOptions = () => this.getMonthBirth().find('option');
+    getYearBirthOptions = () => this.getYearBirth().find('option');
+    getDateBirthSelected = () => this.getDateBirth().find('option:selected')
+    getMonthBirthSelected = () => this.getMonthBirth().find('option:selected')
+    getYearBirthSelected = () => this.getYearBirth().find('option:selected')
     getCheckboxNewsletter = () => cy.get('input[type="checkbox"]#newsletter')
     getCheckboxNewsletterLabel = () => cy.get('.checkbox label[for="newsletter"]')
     getSpecialOfferCheckbox = () => cy.get('input[type="checkbox"]#optin')
@@ -23,6 +29,8 @@ class SignupPage extends Header {
     getCompanyInput = () => cy.get('input[data-qa="company"]')
     getAddressInput = () => cy.get('input[data-qa="address"]')
     getCountry = () => cy.get('select[data-qa="country"]')
+    getCountryOptions = () => this.getCountry().find('option')
+    getCountrySelected = () => this.getCountry().find('option:selected')
     getStateInput = () => cy.get('input[data-qa="state"]')
     getCityInput = () => cy.get('input[data-qa="city"]')
     getZipCodeInput = () => cy.get('input[data-qa="zipcode"]')

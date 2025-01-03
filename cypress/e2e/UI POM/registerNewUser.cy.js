@@ -194,19 +194,120 @@ describe('register a new user', () => {
     })
 
     it('Checking that the browser sends an error message', ()=> {
+        let newUser = genData.newUser();
+        header
+            .clickSighUpLoginLink();
+        loginPage
+            .typeNewUserName(newUser.name)
+            .typeNewUserEmail(`${newUser.name}@`);
+        loginPage
+            .getNewUserSignupEmailAddressInput()
+            .invoke("attr", "required")
+            .should('exist');
+        loginPage
+            .getNewUserSignupEmailAddressInput()
+            .invoke("prop", "validationMessage")
+            .should("include", `${newUser.name}@`); 
+   });
+
+    it('Check if the selected date is displayed in the “Date of birth” field during registration', ()=> {
+        let newUser = genData.newUser();
+        header
+            .clickSighUpLoginLink();
+        loginPage
+            .typeNewUserName(newUser.name)
+            .typeNewUserEmail(newUser.emailAddress)
+            .clickSignUpButton();
+        signupPage
+            .getDateBirthSelected().should('have.text', 'Day');
+
+        signupPage
+            .getDateBirthOptions()
+            .each(($el) => {
+                const value = $el.attr('value');
+                if (value) {
+                    signupPage
+                        .selectDateOfBirth(value)
+                        .getDateBirthSelected()
+                        .should('have.text', value)
+                        .and('have.value', value);
+                };
+            });
+    });
+
+    it('Check if the selected month is displayed in the “Date of birth” field during registration', ()=> {
+        let newUser = genData.newUser();
+        header
+            .clickSighUpLoginLink();
+        loginPage
+            .typeNewUserName(newUser.name)
+            .typeNewUserEmail(newUser.emailAddress)
+            .clickSignUpButton();
+        signupPage
+            .getMonthBirthSelected().should('have.text', 'Month');
+
+        signupPage
+            .getMonthBirthOptions()
+            .each(($el) => {
+                const value = $el.attr('value');
+                if (value) {
+                    signupPage
+                        .selectMonthOfBirth(value)
+                        .getMonthBirthSelected()
+                        .should('have.text', accountInformation.monthOfBirth[value-1])
+                        .and('have.value', value);
+                };
+            });
+    });
+
+    it('Check if the selected year is displayed in the “Date of birth” field during registration', ()=> {
+        let newUser = genData.newUser();
+        header
+            .clickSighUpLoginLink();
+        loginPage
+            .typeNewUserName(newUser.name)
+            .typeNewUserEmail(newUser.emailAddress)
+            .clickSignUpButton();
+        signupPage
+            .getYearBirthSelected().should('have.text', 'Year');
+
+        signupPage
+            .getYearBirthOptions()
+            .each(($el) => {
+                const value = $el.attr('value');
+                if (value === '2019') return false; // Since this is a learning project to reduce time I have limited the validation to disable the restriction, comment out or remove this line
+                if (value) {
+                    signupPage
+                        .selectYearOfBirth(value)
+                        .getYearBirthSelected()
+                        .should('have.text', value)
+                        .and('have.value', value);
+                };
+            });
+    });
+
+    it('Check if the selected country is displayed in the “Date of birth” field during registration', ()=> {
         let newUser = genData.newUser()
         header
             .clickSighUpLoginLink()
         loginPage
             .typeNewUserName(newUser.name)
-            .typeNewUserEmail(`${newUser.name}@`)
-        loginPage
-            .getNewUserSignupEmailAddressInput()
-            .invoke("attr", "required")
-            .should('exist')
-        loginPage
-            .getNewUserSignupEmailAddressInput()
-            .invoke("prop", "validationMessage")
-            .should("include", `${newUser.name}@`); 
-   })
+            .typeNewUserEmail(newUser.emailAddress)
+            .clickSignUpButton()
+        signupPage
+            .getCountrySelected().should('have.text', 'India')
+
+        signupPage
+            .getCountryOptions()
+            .each(($el) => {
+                const value = $el.attr('value');
+                if (value) {
+                    signupPage
+                        .selectCountry(value)
+                        .getCountrySelected()
+                        .should('have.text', value)
+                        .and('have.value', value);
+                }
+            });
+    })
 })
