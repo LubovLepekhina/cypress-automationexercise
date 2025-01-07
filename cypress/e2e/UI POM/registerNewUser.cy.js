@@ -100,7 +100,7 @@ describe('register a new user', () => {
 
     it('Create new user via API POST request', () => {
         let newUser = genData.newUser()
-        cy.createAccountAPI(newUser)
+        cy.createAccountWithCSRF(newUser)
         cy.visit('/').log('delete an account')
         header.clickDeleteAccountLink()
     })

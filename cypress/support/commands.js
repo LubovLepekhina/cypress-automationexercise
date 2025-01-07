@@ -62,7 +62,7 @@ Cypress.Commands.add('createAccount', (newUser) => {
         .clickCreateAccountButton()
 })
 
-Cypress.Commands.add('createAccountAPI', (newUser) => {
+Cypress.Commands.add('createAccountWithCSRF', (newUser) => {
 
     function getCSRFmiddlewaretoken(response) {
         const matches = response.body.match(/<input[^>]*name=["']csrfmiddlewaretoken["'][^>]*value=["'](.+?)["']/);
@@ -135,5 +135,60 @@ Cypress.Commands.add('getData', (endpoint) => {
     return cy.request({
         method: 'GET',
         url: '/' + endpoint
+    })
+})
+
+Cypress.Commands.add('apiCreateUserAccount', (newUser) => {
+    cy.request({
+        method: 'POST',
+        url: '/api/createAccount',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: {
+            title:'Mr',
+            name: newUser.name,
+            email: newUser.emailAddress,
+            password: newUser.password,
+            birth_date: newUser.birthDate.dateOfBirth,
+            birth_month: newUser.birthDate.monthOfBirth,
+            birth_year: newUser.birthDate.yearOfBirth,
+            firstname: newUser.firstName,
+            lastname: newUser.lastName,
+            company: newUser.company,
+            address1: newUser.address,
+            address2: newUser.address,
+            country: newUser.country,
+            zipcode: newUser.zipCode,
+            state: newUser.state,
+            city: newUser.city,
+            mobile_number: newUser.mobileNumber,
+        }
+    })
+})
+
+Cypress.Commands.add('apiLogin', (newUser) => {
+    cy.request({
+        method: 'POST',
+        url: '/api/verifyLogin',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: {
+            email: newUser.emailAddress,
+            password: newUser.password,
+        }
+    })
+})
+
+Cypress.Commands.add('apiDeleteUserAccount', (newUser) => {
+    cy.request({
+        method: 'DELETE',
+        url: '/api/deleteAccount',
+        form: true,
+        body: {
+            email: newUser.emailAddress,
+            password: newUser.password,
+        }
     })
 })
