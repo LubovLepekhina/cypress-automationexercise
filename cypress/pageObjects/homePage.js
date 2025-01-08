@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
-import Header from './headerPage'
+import ProductsPage from './productsPage'
 
-class HomePage extends Header {
+class HomePage extends ProductsPage {
     
 }
 

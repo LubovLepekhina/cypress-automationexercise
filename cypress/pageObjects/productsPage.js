@@ -4,6 +4,7 @@ import Header from './headerPage'
 class ProductsPage extends Header {
     getAllProductCards = () => cy.get('div.features_items>div.col-sm-4')
     getProductCardInfo = () => cy.get('.productinfo')
+    getViewProductLink = () => cy.get('a[href*="/product_details/"]')
     getConfirmPopUp = () => cy.get('div.modal-content')
     getModalShoppingContinueBtn = () => cy.get('button').contains('Continue Shopping')
     getModalViewCartLink = () => cy.get('.modal-body a[href="/view_cart"]')
@@ -23,15 +24,19 @@ class ProductsPage extends Header {
 
     generateRandomIndexProductCard() {
         return this.getAllProductCards().its('length').then((n) => {
-            let index = Cypress._.random(0, n - 1) 
-            return cy.wrap(index)
+            return Cypress._.random(0, n - 1)
         })
     }
 
     addProductToCart(index) {
         this.getAllProductCards().eq(index).within((productCard) => {
-            cy.wrap(productCard).trigger('mouseover')
-            this.getOverlayAddtoCartBtn().click({force: true})
+            cy.wrap(productCard)
+                .scrollIntoView()
+                .trigger('mouseover')  
+            this.getOverlayAddtoCartBtn()
+                //.should('be.visible') 
+                .should('not.be.disabled')
+                .click({force: true})
         })
         return this
     }
@@ -69,6 +74,9 @@ class ProductsPage extends Header {
             cy.wrap(card).find('p').first().invoke('text').then(text => {
                 productCardObj.description = text
             })
+            cy.wrap(card).find('img').invoke('attr', 'src').then(text => {
+                productCardObj.imageLink = text
+            })
             return cy.wrap(productCardObj)
         })
     }
@@ -79,7 +87,7 @@ class ProductsPage extends Header {
     }
 
     clickModalViewCartLink() {
-        this.getModalViewCartLink().click()
+        this.getModalViewCartLink().should('be.visible').click()
         return this
     }
 
