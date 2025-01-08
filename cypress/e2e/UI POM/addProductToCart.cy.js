@@ -3,12 +3,18 @@
 import Header from "../../pageObjects/headerPage"
 import ProductsPage from "../../pageObjects/productsPage"
 import CartPage from "../../pageObjects/cartPage"
+import AccountCreatedPage from "../../pageObjects/accountCreatedPage"
+import HomePage from "../../pageObjects/homePage"
+import ProductDetailsPage from "../../pageObjects/productDetailsPage"
 
 import genData from '../../fixtures/genData'
 
 const header = new Header()
 const productsPage = new ProductsPage()
 const cartPage = new CartPage()
+const accountCreatedPage = new AccountCreatedPage()
+const homePage = new HomePage()
+const productDetailsPage = new ProductDetailsPage()
 
 describe('adding products to cart by registered user', () => {
 
@@ -73,9 +79,7 @@ describe('adding products to cart by registered user', () => {
         })
         
         cy.log('retrieve initial data from cart table')
-        cartPage.retrieveDataFromCartTable().then(tabledata => {
-            return tabledata
-        }).as('initialData')
+        cartPage.retrieveDataFromCartTable().as('initialData')
 
         header.clickProductsLink()
         
@@ -110,6 +114,47 @@ describe('adding products to cart by registered user', () => {
                 cy.log('verify product price')
                 expect(String(tabledata[0].Price)).to.contain(card.price.slice(3).trim())
             })
+        })
+    })
+
+    it('redirects to the product page when clicking on a product from the cart', () => {
+        cy.intercept({
+            method: 'GET',
+            url: '/add_to_cart/*'
+        }).as('addedToCart')
+        accountCreatedPage.clickContinueButton()
+        homePage.generateRandomIndexProductCard().then(index => {
+            homePage.retrieveInfoFromProductCard(index).as('cardInfo')
+            homePage.addProductToCart(index)
+            cy.log('add a dynamic waiter to ensure product is added to the card and modal pop up is visible')
+            cy.wait('@addedToCart')    
+            homePage.clickModalViewCartLink()
+        })
+        cy.get('@cardInfo').then((cardInfo) => {
+            cartPage.verifyCartTableProductName(cardInfo.description)
+            cartPage.verifyCartTableProductPrice(cardInfo.description, cardInfo.price)
+
+            cartPage.retrieveProductPageLink(cardInfo.description).as('endpoint')
+            cartPage.clickProductDescriptionLinkFromCartTable(cardInfo.description)
+            
+            cy.log('verify product name')
+            productDetailsPage.getNameProductInformation().should('have.text', cardInfo.description)
+            
+            cy.log('verify product price')
+            productDetailsPage.getPriceProductInformation().should('have.text', cardInfo.price)
+            
+            cy.log('verify product image')
+            productDetailsPage.getProductImage().invoke('attr', 'src').then(productImage => {
+                expect(productImage).to.eq(cardInfo.imageLink)
+            })
+            productDetailsPage.getProductImage().then(($img) => {
+                expect($img).to.have.prop('naturalWidth').greaterThan(0)
+                expect($img).to.have.prop('naturalHeight').greaterThan(0)
+            })
+        })
+        //cy.log('verify url')
+        cy.get('@endpoint').then((endpoint) => {
+            cy.url().should('contain', endpoint)
         })
     })
 

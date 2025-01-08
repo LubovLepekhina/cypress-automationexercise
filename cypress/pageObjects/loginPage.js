@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
-class LoginPage {
+import Header from "./headerPage"
+
+class LoginPage extends Header {
     getHeadingNewUserSignUp = () => cy.get('.signup-form h2')
     getNewUserSignupNameInput = () => cy.get('input[data-qa="signup-name"]')
     getNewUserSignupEmailAddressInput = () => cy.get('input[data-qa="signup-email"]')
