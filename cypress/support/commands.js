@@ -145,7 +145,7 @@ Cypress.Commands.add('apiCreateUserAccount', (
     userPassword = newUser.password) => {
     cy.request({
         method: 'POST',
-        url: ENDPOINTS.endpointsApi.API.createAccount,
+        url: ENDPOINTS.API.createAccount,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -177,7 +177,7 @@ Cypress.Commands.add('apiLogin', (
     userPassword = newUser.password) => {
     cy.request({
         method: 'POST',
-        url: ENDPOINTS.endpointsApi.API.login,
+        url: ENDPOINTS.API.login,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -193,7 +193,7 @@ Cypress.Commands.add('apiDeleteUserAccount', (
     userPassword = newUser.password) => {
     cy.request({
         method: 'DELETE',
-        url: ENDPOINTS.endpointsApi.API.deleteUserAccount,
+        url: ENDPOINTS.API.deleteUserAccount,
         form: true,
         body: {
             email: userEmail,

@@ -4,7 +4,6 @@ import Header from "../../pageObjects/headerPage"
 import ProductsPage from "../../pageObjects/productsPage"
 import CartPage from "../../pageObjects/cartPage"
 import LoginPage from '../../pageObjects/loginPage'
-
 import genData from '../../fixtures/genData'
 
 const header = new Header()

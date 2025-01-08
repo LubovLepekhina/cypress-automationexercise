@@ -1,7 +1,4 @@
 export const ENDPOINTS = {
-    LOGIN: 'login',
-    SIGNUP: 'signup', 
-    endpointsApi: {
     UI : {
         LOGIN: 'login',
         SIGNUP: 'signup'
@@ -13,6 +10,5 @@ export const ENDPOINTS = {
         createAccount: '/api/createAccount',
         login: '/api/verifyLogin',
         deleteUserAccount: '/api/deleteAccount',
-    }
     }
 }
