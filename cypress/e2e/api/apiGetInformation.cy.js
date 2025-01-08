@@ -4,9 +4,7 @@ import {calculateBrandQuantity} from '../../support/utils'
 import {ENDPOINTS} from '../../support/endpoints'
 
 describe('using API', () => {
-
-    const {getAllProductsList, getAllBrandsList} = ENDPOINTS.endpointsApi.API //деструктуризация
-    
+    const {getAllProductsList, getAllBrandsList} = ENDPOINTS.endpointsApi.API //деструктуризация   
    
     it('get the same list of brands using 2 different methods', () => {
         cy.log('Get the list of brands from the first API')

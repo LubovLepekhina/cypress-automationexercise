@@ -39,8 +39,23 @@ class CartPage extends Header {
     verifyCartTableProductPrice(productDescription, productPrice) {
         this.getProductbyDescription(productDescription).find('td.cart_price')
             .should('be.visible')
-            .and('contain', productPrice)
+            .invoke('text').then(($text) => {
+                expect($text.trim()).to.eq(productPrice)
+            })
         return this
+    }
+
+    clickProductDescriptionLinkFromCartTable(productName) {
+        this.getDescription().contains(productName).click()
+        return this
+    }
+
+    retrieveProductPageLink(productName) {
+        return this.getDescription().contains(productName)
+            .invoke('attr', 'href')
+            .then(link => {
+                return link
+        })
     }
 
 }
