@@ -8,6 +8,7 @@ import HomePage from "../../pageObjects/homePage"
 import ProductDetailsPage from "../../pageObjects/productDetailsPage"
 
 import genData from '../../fixtures/genData'
+import { ENDPOINTS } from "../../support/endpoints"
 
 const header = new Header()
 const productsPage = new ProductsPage()
@@ -120,7 +121,7 @@ describe('adding products to cart by registered user', () => {
     it('redirects to the product page when clicking on a product from the cart', () => {
         cy.intercept({
             method: 'GET',
-            url: '/add_to_cart/*'
+            url: `/${ENDPOINTS.API.addToCart}/*`
         }).as('addedToCart')
         accountCreatedPage.clickContinueButton()
         homePage.generateRandomIndexProductCard().then(index => {

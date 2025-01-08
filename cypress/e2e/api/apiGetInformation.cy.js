@@ -5,7 +5,7 @@ import {ENDPOINTS} from '../../support/endpoints'
 
 describe('using API', () => {
 
-    const {getAllProductsList, getAllBrandsList} = ENDPOINTS.endpointsApi //деструктуризация
+    const {getAllProductsList, getAllBrandsList} = ENDPOINTS.API //деструктуризация
     
    
     it('get the same list of brands using 2 different methods', () => {
