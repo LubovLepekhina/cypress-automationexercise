@@ -3,21 +3,27 @@
 import Header from "../../pageObjects/headerPage"
 import ProductsPage from "../../pageObjects/productsPage"
 import CartPage from "../../pageObjects/cartPage"
+import LoginPage from '../../pageObjects/loginPage'
 
 import genData from '../../fixtures/genData'
 
 const header = new Header()
 const productsPage = new ProductsPage()
 const cartPage = new CartPage()
+const loginPage = new LoginPage()
 
 describe('adding products to cart by registered user', () => {
 
     beforeEach(() => {
         let newUser = genData.newUser()
 
-        cy.visit('/')
-        cy.newUserSignUp(newUser)
-        cy.createAccount(newUser)
+        cy.apiCreateUserAccount(newUser)
+
+        cy.visit('/login')
+        loginPage
+            .typeLoginUserEmail(newUser.emailAddress)
+            .typeLoginUserPassword(newUser.password)
+            .clickLoginButton()
     })
 
     afterEach(() => {

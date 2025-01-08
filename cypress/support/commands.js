@@ -27,6 +27,7 @@
 import LoginPage from '../pageObjects/loginPage'
 import HomePage  from '../pageObjects/homePage'
 import SignupPage from '../pageObjects/signupPage'
+import { ENDPOINTS } from './endpoints'
 
 const loginPage = new LoginPage()
 const homePage = new HomePage()
@@ -99,7 +100,7 @@ Cypress.Commands.add('createAccountWithCSRF', (newUser) => {
                 form: true,
                 body: {
                     csrfmiddlewaretoken: Cypress.env('csrfmiddlewaretoken'),
-                    title:'Mr',
+                    title: newUser.gender,
                     name: newUser.name,
                     email_address: newUser.emailAddress,
                     password: newUser.password,
@@ -138,18 +139,21 @@ Cypress.Commands.add('getData', (endpoint) => {
     })
 })
 
-Cypress.Commands.add('apiCreateUserAccount', (newUser) => {
+Cypress.Commands.add('apiCreateUserAccount', (
+    newUser, 
+    userEmail=newUser.emailAddress, 
+    userPassword = newUser.password) => {
     cy.request({
         method: 'POST',
-        url: '/api/createAccount',
+        url: ENDPOINTS.endpointsApi.API.createAccount,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: {
-            title:'Mr',
+            title: newUser.gender,
             name: newUser.name,
-            email: newUser.emailAddress,
-            password: newUser.password,
+            email: userEmail,
+            password: userPassword,
             birth_date: newUser.birthDate.dateOfBirth,
             birth_month: newUser.birthDate.monthOfBirth,
             birth_year: newUser.birthDate.yearOfBirth,
@@ -167,28 +171,33 @@ Cypress.Commands.add('apiCreateUserAccount', (newUser) => {
     })
 })
 
-Cypress.Commands.add('apiLogin', (newUser) => {
+Cypress.Commands.add('apiLogin', (
+    newUser, 
+    userEmail=newUser.emailAddress, 
+    userPassword = newUser.password) => {
     cy.request({
         method: 'POST',
-        url: '/api/verifyLogin',
+        url: ENDPOINTS.endpointsApi.API.login,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: {
-            email: newUser.emailAddress,
-            password: newUser.password,
+            email: userEmail,
+            password: userPassword,
         }
     })
 })
 
-Cypress.Commands.add('apiDeleteUserAccount', (newUser) => {
+Cypress.Commands.add('apiDeleteUserAccount', (
+    userEmail=newUser.emailAddress, 
+    userPassword = newUser.password) => {
     cy.request({
         method: 'DELETE',
-        url: '/api/deleteAccount',
+        url: ENDPOINTS.endpointsApi.API.deleteUserAccount,
         form: true,
         body: {
-            email: newUser.emailAddress,
-            password: newUser.password,
+            email: userEmail,
+            password: userPassword,
         }
     })
 })

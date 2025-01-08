@@ -6,6 +6,9 @@ class LoginPage {
     getNewUserSignupEmailAddressInput = () => cy.get('input[data-qa="signup-email"]')
     getSignUpButton = () => cy.get('[data-qa="signup-button"]')
     getHeaderLoginForm = () => cy.get('.login-form h2')
+    getEmailFieldLogin = () => cy.get('[data-qa="login-email"]')
+    getPassFieldLogin = () => cy.get('[data-qa="login-password"]')
+    getLoginButton = () => cy.get('[data-qa="login-button"]')
 
     typeNewUserName(name) {
         this.getNewUserSignupNameInput().type(name)
@@ -21,7 +24,21 @@ class LoginPage {
         this.getSignUpButton().click()
         return this
     }
-    
+
+    typeLoginUserEmail(email) {
+        this.getEmailFieldLogin().type(email, { delay: 0 })
+        return this
+    }
+
+    typeLoginUserPassword(password) {
+        this.getPassFieldLogin().type(password, { delay: 0 })
+        return this
+    }
+
+    clickLoginButton() {
+        this.getLoginButton().click()
+        return this
+    }
 }
 
 export default LoginPage
