@@ -15,7 +15,7 @@ beforeEach('visit base URL', () => {
 describe('User Login', () => {
     it('redirects to login page', () => {
         homePage.clickSighUpLoginLink()
-        cy.url().should('eq', Cypress.config('baseUrl') + ENDPOINTS.LOGIN)
+        cy.url().should('eq', Cypress.config('baseUrl') + ENDPOINTS.UI.LOGIN)
         loginPage.getHeaderLoginForm().invoke('text').should('eq', loginPageData.loginForm.headerText )
     })
     
