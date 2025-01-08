@@ -171,10 +171,7 @@ Cypress.Commands.add('apiCreateUserAccount', (
     })
 })
 
-Cypress.Commands.add('apiLogin', (
-    newUser, 
-    userEmail=newUser.emailAddress, 
-    userPassword = newUser.password) => {
+Cypress.Commands.add('apiLogin', (userEmail, userPassword) => {
     cy.request({
         method: 'POST',
         url: ENDPOINTS.API.login,
@@ -188,9 +185,7 @@ Cypress.Commands.add('apiLogin', (
     })
 })
 
-Cypress.Commands.add('apiDeleteUserAccount', (
-    userEmail=newUser.emailAddress, 
-    userPassword = newUser.password) => {
+Cypress.Commands.add('apiDeleteUserAccount', (userEmail, userPassword) => {
     cy.request({
         method: 'DELETE',
         url: ENDPOINTS.API.deleteUserAccount,
