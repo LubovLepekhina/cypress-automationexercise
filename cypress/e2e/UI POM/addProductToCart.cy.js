@@ -18,7 +18,7 @@ const homePage = new HomePage()
 const productDetailsPage = new ProductDetailsPage()
 
 describe('adding products to cart by registered user', () => {
-
+    
     beforeEach(() => {
         let newUser = genData.newUser()
 
@@ -156,6 +156,35 @@ describe('adding products to cart by registered user', () => {
         //cy.log('verify url')
         cy.get('@endpoint').then((endpoint) => {
             cy.url().should('contain', endpoint)
+        })
+    })
+
+    it('add two products to cart from the product details page', () => {
+        productsPage.clickProductsLink()
+            .generateRandomIndexProductCard().then((index) => {
+                productsPage.chooseProductCardByIndex(index)
+            }).within(() => productsPage.getViewProductLink().click())
+        
+        productDetailsPage.verifyDefaultQuantity()
+            .clickUpArrowQuantity()
+            .getQuantityInput().should('have.value', '2')
+        
+        productDetailsPage.getProductInfo().as('productInfo')
+        productDetailsPage.clickAddToCartBtn()
+            .getConfirmPopUp().should('be.visible')
+                .and('include.text', 'Added!')
+        productDetailsPage.clickModalViewCartLink()
+        cy.url().should('contain', ENDPOINTS.UI.CART)
+
+        cartPage.retrieveDataFromCartTable().then((data) => {
+            cy.get('@productInfo').then((productInfo) => {
+                cy.log(productInfo.total)
+                expect(data[0].Description).to.contains(productInfo.productName)
+                expect(data[0].Description).to.contains(productInfo.productCategory)
+                expect(String(data[0].Price)).to.eq(productInfo.productPrice)
+                expect(String(data[0].Quantity)).to.eq(productInfo.productQuantity)
+                expect(String(data[0].Total)).to.eq(productInfo.total)
+            })  
         })
     })
 
