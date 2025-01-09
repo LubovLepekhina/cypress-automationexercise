@@ -30,6 +30,11 @@ describe('adding products to cart by registered user', () => {
             .typeLoginUserEmail(newUser.emailAddress)
             .typeLoginUserPassword(newUser.password)
             .clickLoginButton()
+
+        cy.intercept({
+            method: 'GET',
+            url: `/${ENDPOINTS.API.addToCart}/*`
+        }).as('addedToCart')    
     })
 
     afterEach(() => {
@@ -124,11 +129,6 @@ describe('adding products to cart by registered user', () => {
     })
 
     it('redirects to the product page when clicking on a product from the cart', () => {
-        cy.intercept({
-            method: 'GET',
-            url: `/${ENDPOINTS.API.addToCart}/*`
-        }).as('addedToCart')
-        accountCreatedPage.clickContinueButton()
         homePage.generateRandomIndexProductCard().then(index => {
             homePage.retrieveInfoFromProductCard(index).as('cardInfo')
             homePage.addProductToCart(index)
@@ -158,7 +158,7 @@ describe('adding products to cart by registered user', () => {
                 expect($img).to.have.prop('naturalHeight').greaterThan(0)
             })
         })
-        //cy.log('verify url')
+        cy.log('verify url')
         cy.get('@endpoint').then((endpoint) => {
             cy.url().should('contain', endpoint)
         })
