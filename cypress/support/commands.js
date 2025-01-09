@@ -139,10 +139,7 @@ Cypress.Commands.add('getData', (endpoint) => {
     })
 })
 
-Cypress.Commands.add('apiCreateUserAccount', (
-    newUser, 
-    userEmail=newUser.emailAddress, 
-    userPassword = newUser.password) => {
+Cypress.Commands.add('apiCreateUserAccount', (newUser) => {
     cy.request({
         method: 'POST',
         url: ENDPOINTS.API.createAccount,
@@ -152,8 +149,8 @@ Cypress.Commands.add('apiCreateUserAccount', (
         body: {
             title: newUser.gender,
             name: newUser.name,
-            email: userEmail,
-            password: userPassword,
+            email: newUser.emailAddress,
+            password: newUser.password,
             birth_date: newUser.birthDate.dateOfBirth,
             birth_month: newUser.birthDate.monthOfBirth,
             birth_year: newUser.birthDate.yearOfBirth,
