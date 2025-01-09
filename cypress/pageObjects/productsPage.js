@@ -5,11 +5,8 @@ class ProductsPage extends Header {
     getAllProductCards = () => cy.get('div.features_items>div.col-sm-4')
     getProductCardInfo = () => cy.get('.productinfo')
     getViewProductLink = () => cy.get('a[href*="/product_details/"]')
-    getConfirmPopUp = () => cy.get('div.modal-content')
-    getModalShoppingContinueBtn = () => cy.get('button').contains('Continue Shopping')
-    getModalViewCartLink = () => cy.get('.modal-body a[href="/view_cart"]')
     getOverlayAddtoCartBtn = () => cy.contains('.overlay-content .btn', 'Add to cart')
-
+    
 
     findRandomProductCard() {
         return this.getAllProductCards().then(($cards) => {
@@ -57,7 +54,6 @@ class ProductsPage extends Header {
         return cy.wrap(randomCard).then((card) => {
             const price = card.find('h2').first().text();
             const description = card.find('p').first().text();
-            console.log(price, description)
             return {
                 'price': price,
                 'description': description
@@ -79,16 +75,6 @@ class ProductsPage extends Header {
             })
             return cy.wrap(productCardObj)
         })
-    }
-
-    clickModalShoppingContinueBtn() {
-        this.getModalShoppingContinueBtn().click()
-        return this
-    }
-
-    clickModalViewCartLink() {
-        this.getModalViewCartLink().should('be.visible').click()
-        return this
     }
 
 }
