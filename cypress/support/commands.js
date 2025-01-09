@@ -27,6 +27,7 @@
 import LoginPage from '../pageObjects/loginPage'
 import HomePage  from '../pageObjects/homePage'
 import SignupPage from '../pageObjects/signupPage'
+import { ENDPOINTS } from './endpoints'
 
 const loginPage = new LoginPage()
 const homePage = new HomePage()
@@ -99,7 +100,7 @@ Cypress.Commands.add('createAccountWithCSRF', (newUser) => {
                 form: true,
                 body: {
                     csrfmiddlewaretoken: Cypress.env('csrfmiddlewaretoken'),
-                    title:'Mr',
+                    title: newUser.gender,
                     name: newUser.name,
                     email_address: newUser.emailAddress,
                     password: newUser.password,
@@ -141,12 +142,12 @@ Cypress.Commands.add('getData', (endpoint) => {
 Cypress.Commands.add('apiCreateUserAccount', (newUser) => {
     cy.request({
         method: 'POST',
-        url: '/api/createAccount',
+        url: ENDPOINTS.API.createAccount,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: {
-            title:'Mr',
+            title: newUser.gender,
             name: newUser.name,
             email: newUser.emailAddress,
             password: newUser.password,
@@ -167,28 +168,28 @@ Cypress.Commands.add('apiCreateUserAccount', (newUser) => {
     })
 })
 
-Cypress.Commands.add('apiLogin', (newUser) => {
+Cypress.Commands.add('apiLogin', (userEmail, userPassword) => {
     cy.request({
         method: 'POST',
-        url: '/api/verifyLogin',
+        url: ENDPOINTS.API.login,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: {
-            email: newUser.emailAddress,
-            password: newUser.password,
+            email: userEmail,
+            password: userPassword,
         }
     })
 })
 
-Cypress.Commands.add('apiDeleteUserAccount', (newUser) => {
+Cypress.Commands.add('apiDeleteUserAccount', (userEmail, userPassword) => {
     cy.request({
         method: 'DELETE',
-        url: '/api/deleteAccount',
+        url: ENDPOINTS.API.deleteUserAccount,
         form: true,
         body: {
-            email: newUser.emailAddress,
-            password: newUser.password,
+            email: userEmail,
+            password: userPassword,
         }
     })
 })

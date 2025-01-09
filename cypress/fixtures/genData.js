@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 module.exports = {
     newUser: function () {
         let NewUser = {
+            gender: faker.helpers.arrayElement(['Mr', 'Mrs']),
             name: faker.person.firstName(),
             emailAddress: faker.internet.email({firstName: faker.person.firstName()}),
             password: faker.internet.password(),
