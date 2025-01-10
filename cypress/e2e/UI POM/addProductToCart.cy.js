@@ -19,10 +19,9 @@ const homePage = new HomePage()
 const productDetailsPage = new ProductDetailsPage()
 
 describe('adding products to cart by registered user', () => {
-    
+    let newUser;
     beforeEach(() => {
-        let newUser = genData.newUser()
-
+        newUser = genData.newUser()
         cy.apiCreateUserAccount(newUser)
 
         cy.visit('/login')
@@ -191,6 +190,28 @@ describe('adding products to cart by registered user', () => {
                 expect(String(data[0].Total)).to.eq(productInfo.total)
             })  
         })
+    })
+
+    it('The added item will be saved if you add it before authorisation', () => {
+        header
+            .clickLogOutLink()
+            .clickProductsLink()
+        productsPage
+            .addProductToCart(1)
+        header
+            .clickModalViewCartLink()
+        cartPage
+            .clickProceedToCheckoutBtn()
+        header
+            .clickLoginMsgBtn()
+        loginPage
+            .typeLoginUserEmail(newUser.emailAddress)
+            .typeLoginUserPassword(newUser.password)
+            .clickLoginButton()
+        header
+            .clickCartLink()
+        cartPage
+            .getCartTableRows().should('be.visible');
     })
 
 })
