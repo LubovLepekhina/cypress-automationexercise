@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import { recurse } from 'cypress-recurse'
 import Header from "./headerPage";
 
 class ProductDetails extends Header {
@@ -37,6 +38,33 @@ class ProductDetails extends Header {
             .then(() => productInfoObject.total = String(+productInfoObject.productPrice * +productInfoObject.productQuantity))
         
         return cy.wrap(productInfoObject)
+    }
+
+    clickUpperArrowMultipleTimes(number) {
+        recurse(
+            () => {
+                return this.getQuantityInput().invoke('val').then(parseInt)
+            },
+            //predicate - this function receives whatever is yeildes from the above, which is a number in our case
+            //and if numer n === quantity is true recurse is finiched, if false - it executes code in post()actions below
+            (n) => n === number,
+            {
+                delay: 50, // wait a bit between clicks
+                // we might need longer then default 4000ms in case of big quantities 
+                timeout: 20000,
+                log: false,
+                //here we indicate what to do if a predicate fails - in our case we perform click()
+                post: () => {
+                   this.getQuantityInput().type('{uparrow}')
+                }
+            }
+        ).then(actualQuantity => {
+            expect(actualQuantity ).to.eq(number)
+        })
+    }
+
+    invokeValueQuantityInput() {
+        return this.getQuantityInput().invoke('val')
     }
 
 }
