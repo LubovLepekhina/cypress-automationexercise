@@ -14,7 +14,6 @@ const header = new Header()
 const productsPage = new ProductsPage()
 const cartPage = new CartPage()
 const loginPage = new LoginPage()
-const accountCreatedPage = new AccountCreatedPage()
 const homePage = new HomePage()
 const productDetailsPage = new ProductDetailsPage()
 
@@ -191,6 +190,32 @@ describe('adding products to cart by registered user', () => {
                 expect(String(data[0].Total)).to.eq(productInfo.total)
             })  
         })
+    })
+
+    it('adds multiple quantity of the same product from the product details page', () => {
+        let quantityToBuy = Cypress._.random(1,25)
+        cy.log(`Quantity To Buy ${quantityToBuy}`)
+        productsPage.clickProductsLink()
+        .generateRandomIndexProductCard().then((index) => {
+            productsPage.chooseProductCardByIndex(index)
+        }).within(() => productsPage.getViewProductLink().click())
+        productDetailsPage.clickUpperArrowMultipleTimes(quantityToBuy)
+        productDetailsPage.getProductInfo().as('productDetails')
+        productDetailsPage.clickAddToCartBtn()
+        cy.wait('@addedToCart')
+        productDetailsPage.clickModalViewCartLink()
+        cartPage.retrieveDataFromCartTable().then(cartData => {
+            cy.log('verify product details and quantity')
+            expect(cartData[0].Quantity).to.eq(quantityToBuy)
+            cy.get('@productDetails').then(info => {
+                expect(cartData[0].Description).to.contains(info.productName)
+                expect(cartData[0].Description).to.contains(info.productCategory)
+                expect(String(cartData[0].Price)).to.eq(info.productPrice)
+                expect(String(cartData[0].Quantity)).to.eq(info.productQuantity)
+                expect(String(cartData[0].Total)).to.eq(info.total)
+            })
+        })
+        
     })
 
 })
