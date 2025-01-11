@@ -10,6 +10,7 @@ class Header {
     getConfirmPopUp = () => cy.get('div.modal-content')
     getModalShoppingContinueBtn = () => cy.get('button').contains('Continue Shopping')
     getModalViewCartLink = () => cy.get('.modal-body a[href="/view_cart"]')
+    getLoginMessageBtn = () => cy.get('.modal-content a[href="/login"]')
 
     clickSighUpLoginLink() {
         this.getSignUpLogin().click()
@@ -43,6 +44,11 @@ class Header {
 
     clickModalViewCartLink() {
         this.getModalViewCartLink().should('be.visible').click()
+        return this
+    }
+
+    clickLoginMsgBtn() {
+        this.getLoginMessageBtn().click()
         return this
     }
 }

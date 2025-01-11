@@ -9,6 +9,7 @@ class CartPage extends Header {
     getCartTableHeader = () => cy.get('#cart_info_table thead td')
     getCartTableRows = () => cy.get('#cart_info_table tbody tr')
     getProductbyDescription = (productDescription) => cy.contains('#cart_info_table tbody tr', productDescription)
+    getProceedToCheckoutBtn = () => cy.get('a.btn.btn-default.check_out')
 
     retrieveDataFromCartTable() {
         let tableData = []
@@ -56,6 +57,11 @@ class CartPage extends Header {
             .then(link => {
                 return link
         })
+    }
+
+    clickProceedToCheckoutBtn() {
+        this.getProceedToCheckoutBtn().click()
+        return this
     }
 
 }
