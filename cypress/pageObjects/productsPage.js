@@ -77,6 +77,12 @@ class ProductsPage extends Header {
         })
     }
 
+    clickRandomViewProductLink() {
+        this.generateRandomIndexProductCard().then((index) => {
+            this.chooseProductCardByIndex(index)
+        }).within(() => this.getViewProductLink().click())
+    }
+    
 }
 
 export default ProductsPage

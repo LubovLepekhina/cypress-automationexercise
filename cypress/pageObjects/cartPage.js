@@ -10,6 +10,7 @@ class CartPage extends Header {
     getCartTableRows = () => cy.get('#cart_info_table tbody tr')
     getProductbyDescription = (productDescription) => cy.contains('#cart_info_table tbody tr', productDescription)
     getProceedToCheckoutBtn = () => cy.get('a.btn.btn-default.check_out')
+    getProductDeleteLink = () => cy.get('.cart_quantity_delete')
 
     retrieveDataFromCartTable() {
         let tableData = []
@@ -62,6 +63,35 @@ class CartPage extends Header {
     clickProceedToCheckoutBtn() {
         this.getProceedToCheckoutBtn().click()
         return this
+    }
+
+    getCartTableRowByProductName(productName) {
+        return this.getCartTableRows()
+            .contains(productName)
+            .parents('tr')
+    }
+
+    clickProductDeleteLink(productName) {
+        return this.getCartTableRowByProductName(productName)
+            .within(() => this.getProductDeleteLink().click())
+    }
+
+    getRandomProductName() {
+        let descArray = []
+        return this.getDescription().each(($els) => {
+            descArray.push($els.text())
+        }).then(() => Cypress._.sample(descArray))
+    }
+
+    //не использовала, может пригодиться позже
+    getProductIdByProductName(productName) {
+        this.getCartTableRows()
+            .contains(productName)
+            .closest('tr')
+            .invoke('attr', 'id')
+            .then((id) => {
+                return id.slice(8)
+            })
     }
 
 }
