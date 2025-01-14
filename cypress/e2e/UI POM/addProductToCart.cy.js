@@ -18,7 +18,7 @@ const homePage = new HomePage()
 const productDetailsPage = new ProductDetailsPage()
 
 describe('adding products to cart by registered user', () => {
-    let newUser;
+    let newUser
     beforeEach(() => {
         newUser = genData.newUser()
         cy.apiCreateUserAccount(newUser)
@@ -36,10 +36,10 @@ describe('adding products to cart by registered user', () => {
     })
 
     afterEach(() => {
-        header.clickDeleteAccountLink()
+        cy.apiDeleteUserAccount(newUser.emailAddress, newUser.password)
     })
 
-    it('add product to cart from Products page', () => {
+    it.only('add product to cart from Products page', () => {
         header.clickProductsLink()
         productsPage.findRandomProductCard().then((randomCard) => {
             cy.log(randomCard)
