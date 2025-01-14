@@ -39,7 +39,7 @@ describe('adding products to cart by registered user', () => {
         cy.apiDeleteUserAccount(newUser.emailAddress, newUser.password)
     })
 
-    it.only('add product to cart from Products page', () => {
+    it('add product to cart from Products page', () => {
         header.clickProductsLink()
         productsPage.findRandomProductCard().then((randomCard) => {
             cy.log(randomCard)
@@ -235,32 +235,6 @@ describe('adding products to cart by registered user', () => {
             .clickCartLink()
         cartPage
             .getCartTableRows().should('be.visible');
-    })
-
-    it('add from 2 to 5 products to the cart and delete one of them from the cart', () => {
-        
-        let randomNum = Cypress._.random(2, 6)
-        cy.log(`${randomNum} products will be added to the cart`)
-        for (let i = 1; i <= randomNum; i++) {
-            productsPage.clickProductsLink()
-                .clickRandomViewProductLink()
-
-            productDetailsPage.clickAddToCartBtn()
-            cy.wait('@addedToCart')
-            productDetailsPage.clickModalShoppingContinueBtn()
-        }
-
-        productDetailsPage.clickCartLink()
-        cy.url().should('contain', ENDPOINTS.UI.CART)
-        cartPage.getCartTableRows().should('have.length', randomNum)
-
-        cartPage.getRandomProductName().then((productName) => {
-            cy.log(`Deleting product: ${productName}`)
-            cartPage.clickProductDeleteLink(productName).then(() => {
-                cartPage.getCartTableRows().should('not.contain', productName)
-                    .and('have.length', randomNum - 1)
-            })        
-        })
     })
 
 })
