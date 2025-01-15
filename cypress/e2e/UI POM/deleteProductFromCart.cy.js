@@ -12,7 +12,7 @@ const cartPage = new CartPage()
 const loginPage = new LoginPage()
 const productDetailsPage = new ProductDetailsPage()
 
-describe('deleting products to cart', () => {
+describe('deleting products from cart', () => {
 
     let newUser
     beforeEach(() => {
@@ -29,6 +29,9 @@ describe('deleting products to cart', () => {
             method: 'GET',
             url: `/${ENDPOINTS.API.addToCart}/*`
         }).as('addedToCart')
+    })
+    afterEach(() => {
+        cy.apiDeleteUserAccount(newUser.emailAddress, newUser.password)
     })
 
     it('delete one of several products from the cart', () => {
