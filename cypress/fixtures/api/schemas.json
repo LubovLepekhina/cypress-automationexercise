@@ -15,5 +15,20 @@
           "responseCode",
           "message"
         ]
+    },
+    "emailExist": {
+      "type": "object",
+      "properties": {
+        "responseCode": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "responseCode",
+        "message"
+      ]
     }
 }
