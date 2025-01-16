@@ -1,3 +1,4 @@
 {
-    "createNewUser": ["Email already exists!"]
+    "createNewUser": ["Email already exists!"],
+    "logIn": ["User not found!", "Bad request, email or password parameter is missing in POST request."]
 }
