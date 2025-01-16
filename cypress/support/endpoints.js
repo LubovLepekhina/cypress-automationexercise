@@ -2,7 +2,8 @@ export const ENDPOINTS = {
     UI : {
         LOGIN: 'login',
         SIGNUP: 'signup',
-        CART: 'view_cart'
+        CART: 'view_cart',
+        CHECKOUT: 'checkout'
     },
     API : {
         getAllProductsList: 'api/productsList',
