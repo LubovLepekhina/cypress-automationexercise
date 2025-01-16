@@ -41,3 +41,17 @@ export function createNewUserApi(endpoint, userdata) {
     })
 
 }
+
+export function loginApi(endpoint, userEmail, userPassword) {
+    return cy.request({
+        method: 'POST',
+        url: endpoint,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: {
+            email: userEmail,
+            password: userPassword,
+        }
+    })
+}

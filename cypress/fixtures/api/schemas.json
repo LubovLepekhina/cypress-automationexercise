@@ -30,5 +30,35 @@
         "responseCode",
         "message"
       ]
+    },
+    "succesfullLogIn": {
+      "type": "object",
+      "properties": {
+        "responseCode": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "responseCode",
+        "message"
+      ]
+    },
+    "unsuccesfullLogIn": {
+      "type": "object",
+      "properties": {
+        "responseCode": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "responseCode",
+        "message"
+      ]
     }
 }

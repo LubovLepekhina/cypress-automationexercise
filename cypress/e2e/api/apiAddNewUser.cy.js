@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 import validateSchema from 'cypress-ajv-schema-validator'
 chai.use(require('chai-json-schema'))
 import spok from 'cy-spok'
