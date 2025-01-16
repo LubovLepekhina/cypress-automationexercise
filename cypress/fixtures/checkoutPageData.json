@@ -1,0 +1,4 @@
+{
+    "addressTypes": ["Delivery", "Billing"],
+    "boxesNames": ["Your delivery address", "Your billing address"]
+}
