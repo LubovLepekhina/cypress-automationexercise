@@ -24,4 +24,17 @@ module.exports = {
         };
         return NewUser;
     },
+
+    creditCard: {
+        cardHolder: faker.person.fullName(),
+        cardNumber: faker.finance.creditCardNumber(),
+        cvc: faker.finance.creditCardCVV(),
+        expiryData: function() {
+            const fullExpiryData = faker.date.future({years: 5})
+            return {
+                expiryMonth: fullExpiryData.getMonth() + 1,
+                expiryYear: fullExpiryData.getFullYear()
+            }
+        }  
+    }
 }

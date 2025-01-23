@@ -3,7 +3,9 @@ export const ENDPOINTS = {
         LOGIN: 'login',
         SIGNUP: 'signup',
         CART: 'view_cart',
-        CHECKOUT: 'checkout'
+        CHECKOUT: 'checkout',
+        PAYMENT: 'payment',
+        SUCCESSFULLPAYMENT: 'payment_done'
     },
     API : {
         getAllProductsList: 'api/productsList',
