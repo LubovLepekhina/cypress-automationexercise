@@ -10,5 +10,10 @@ class CheckoutPage extends CartPage {
     getBillingAddressBox = () => cy.get('#address_invoice')
     getPlaceOrderLink = () => cy.get('a[href="/payment"]')
 
+    clickPlaceOrderLink() {
+        this.getPlaceOrderLink().click()
+        return this
+    }
+
 }
 export default CheckoutPage
