@@ -1,8 +1,7 @@
+/// <reference types="cypress" />
 import HomePage  from '../../pageObjects/homePage'
 import LoginPage from '../../pageObjects/loginPage'
-
 import loginPageData from '../../fixtures/loginPageData.json'
-
 import { ENDPOINTS } from '../../support/endpoints'
 
 const homePage = new HomePage()
