@@ -41,7 +41,13 @@ export function createNewUserApi(endpoint, userdata) {
     })
 
 }
-
+/**
+ * login thru api
+ * @param {string} endpoint url endpont to which we make call
+ * @param {string} userEmail existing user email address
+ * @param {string} userPassword existing user password
+ * @returns cypress chainable
+ */
 export function loginApi(endpoint, userEmail, userPassword) {
     return cy.request({
         method: 'POST',
@@ -53,5 +59,52 @@ export function loginApi(endpoint, userEmail, userPassword) {
             email: userEmail,
             password: userPassword,
         }
+    })
+}
+/**
+ * gets the list of all products
+ * @param {string} endpoint 
+ * @returns cypress chainable
+ */
+export function getAllProducts(endpoint) {
+    return cy.api({
+        method: 'GET', 
+        url : endpoint
+    })
+}
+/**
+ * returns a number of the total quantity of different products in database
+ * @param {string} endpoint url to which a request is sent
+ * @returns a number representing the total quantity of types of products in database
+ */
+export function getProductsQuantity(endpoint) {
+  return cy.request({
+      method: "GET",
+      url: endpoint,
+    })
+    .then((resp) => {
+      let respBodyObj = JSON.parse(resp.body);
+      let productsQuantity = respBodyObj.products.length;
+      return cy.wrap(productsQuantity);
+    });
+}
+
+/**
+ * retrieve all product ids
+ * @param {string} endpoint 
+ * @returns array of IDs, cypress chainable
+ */
+export function getAllProductIDs(endpoint) {
+  return cy.api({
+      method: "GET",
+      url: endpoint,
+    })
+    .then((resp) => {
+      let respBodyObj = JSON.parse(resp.body);
+      let productIDs = [];
+      respBodyObj.products.forEach((product) => {
+        productIDs.push(product.id);
+      });
+      return cy.wrap(productIDs);
     })
 }

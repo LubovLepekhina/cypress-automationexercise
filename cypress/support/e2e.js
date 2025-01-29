@@ -20,6 +20,7 @@ import './commands'
 // require('./commands')
 
 import 'cypress-map'
+import 'cypress-plugin-api'
 
 //uncaught:exception
 //To conditionally turn off uncaught exception handling for a certain error

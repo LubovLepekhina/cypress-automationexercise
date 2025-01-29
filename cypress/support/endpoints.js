@@ -14,5 +14,6 @@ export const ENDPOINTS = {
         createAccount: '/api/createAccount',
         login: '/api/verifyLogin',
         deleteUserAccount: '/api/deleteAccount',
+        searchProduct: 'api/searchProduct'
     }
 }
