@@ -182,6 +182,28 @@ Cypress.Commands.add('apiLogin', (userEmail, userPassword) => {
     })
 })
 
+/**
+ * Logs in a user and stores the session using Cypress sessions
+ * @param {Object} credentials - The user's login credentials
+ * @param {string} credentials.emailAddress - The email address of the user
+ * @param {string} credentials.password - The user's password
+ */
+Cypress.Commands.add('loginSession', ( { emailAddress, password }) => {
+    cy.session({emailAddress, password}, () => {
+        cy.request({
+            method: 'POST',
+            url: ENDPOINTS.API.login,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: {
+                email: emailAddress,
+                password: password,
+            }
+        })
+    })
+})
+
 Cypress.Commands.add('apiDeleteUserAccount', (userEmail, userPassword) => {
     cy.request({
         method: 'DELETE',

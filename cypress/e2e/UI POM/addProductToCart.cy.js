@@ -4,7 +4,6 @@ import Header from "../../pageObjects/headerPage"
 import ProductsPage from "../../pageObjects/productsPage"
 import CartPage from "../../pageObjects/cartPage"
 import LoginPage from '../../pageObjects/loginPage'
-import AccountCreatedPage from "../../pageObjects/accountCreatedPage"
 import HomePage from "../../pageObjects/homePage"
 import ProductDetailsPage from "../../pageObjects/productDetailsPage"
 import genData from '../../fixtures/genData'
@@ -17,17 +16,16 @@ const loginPage = new LoginPage()
 const homePage = new HomePage()
 const productDetailsPage = new ProductDetailsPage()
 
-describe('adding products to cart by registered user', () => {
-    let newUser
-    beforeEach(() => {
+let newUser
+
+describe('Cart | Logged-in user adds products', () => {
+    before(()=> {
         newUser = genData.newUser()
         cy.apiCreateUserAccount(newUser)
+    })
 
-        cy.visit('/login')
-        loginPage
-            .typeLoginUserEmail(newUser.emailAddress)
-            .typeLoginUserPassword(newUser.password)
-            .clickLoginButton()
+    beforeEach(() => {
+        cy.loginSession(newUser)
 
         cy.intercept({
             method: 'GET',
@@ -35,11 +33,12 @@ describe('adding products to cart by registered user', () => {
         }).as('addedToCart')    
     })
 
-    afterEach(() => {
+    after(() => {
         cy.apiDeleteUserAccount(newUser.emailAddress, newUser.password)
     })
 
     it('add product to cart from Products page', () => {
+        cy.visit('/')
         header.clickProductsLink()
         productsPage.findRandomProductCard().then((randomCard) => {
             cy.log(randomCard)
@@ -65,6 +64,7 @@ describe('adding products to cart by registered user', () => {
     })
 
     it('updates cart when adding the same product', () => {
+        cy.visit('/')
         header.clickProductsLink()
         
         cy.log('generate random index')
@@ -127,6 +127,7 @@ describe('adding products to cart by registered user', () => {
     })
 
     it('redirects to the product page when clicking on a product from the cart', () => {
+        cy.visit('/')
         homePage.generateRandomIndexProductCard().then(index => {
             homePage.retrieveInfoFromProductCard(index).as('cardInfo')
             homePage.addProductToCart(index)
@@ -163,6 +164,7 @@ describe('adding products to cart by registered user', () => {
     })
 
     it('add two products to cart from the product details page', () => {
+        cy.visit('/')
         productsPage.clickProductsLink()
             .clickRandomViewProductLink()
         
@@ -190,6 +192,7 @@ describe('adding products to cart by registered user', () => {
     })
   
     it('adds multiple quantity of the same product from the product details page', () => {
+        cy.visit('/')
         let quantityToBuy = Cypress._.random(1,25)
         cy.log(`Quantity To Buy ${quantityToBuy}`)
         productsPage.clickProductsLink()
@@ -214,10 +217,26 @@ describe('adding products to cart by registered user', () => {
         })
         
     })
-  
+
+})
+
+describe('Cart | Unregistered user adds products', () => {
+
+})
+
+describe('Cart | Registered user ( but not logged in) adds products', () => {
+    before(()=> {
+        newUser = genData.newUser()
+        cy.apiCreateUserAccount(newUser)
+    })
+
+    after(() => {
+        cy.apiDeleteUserAccount(newUser.emailAddress, newUser.password)
+    })
+
     it('The added item will be saved if you add it before authorisation', () => {
+        cy.visit('/')
         header
-            .clickLogOutLink()
             .clickProductsLink()
         productsPage
             .addProductToCart(1)
