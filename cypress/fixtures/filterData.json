@@ -1,0 +1,16 @@
+{
+    "categories": {
+        "Women": ["Dress", "Tops", "Saree"],
+        "Men": ["Tshirts", "Jeans"],
+        "Kids": ["Dress", "Tops & Shirts"]
+    },
+    "synonyms": {
+        "Dress": ["dress"],
+        "Tops": ["top"],
+        "Saree": ["saree"],
+        "Tshirts": ["tshirt", "t-shirt", "t shirt"],
+        "Jeans": ["jeans"],
+        "Tops & Shirts": ["top", "tops", "shirts", "shirt"]
+    },
+    "brands": ["polo", "h&m", "madame", "mast & harbour", "babyhug", "allen solly junior", "kookie kids", "biba"]
+}

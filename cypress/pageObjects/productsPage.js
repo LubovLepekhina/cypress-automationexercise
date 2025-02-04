@@ -6,6 +6,8 @@ class ProductsPage extends Header {
     getProductCardInfo = () => cy.get('.productinfo')
     getViewProductLink = () => cy.get('a[href*="/product_details/"]')
     getOverlayAddtoCartBtn = () => cy.contains('.overlay-content .btn', 'Add to cart')
+    getCategoryFilterByName = (category) => cy.get('.panel').contains(category)
+    getSubCategories = (category) => cy.get(`#${category} li`)
     
 
     findRandomProductCard() {
@@ -87,6 +89,16 @@ class ProductsPage extends Header {
         this.generateRandomIndexProductCard().then((index) => {
             this.addProductToCart(index)
         })
+    }
+
+    clickCategoryFilter(category) {
+        this.getCategoryFilterByName(category).click()
+        return this
+    }
+
+    clickSubCategoryByProductName(category, productName) {
+        this.getSubCategories(category).contains(productName).should('be.visible').click()
+        return this
     }
     
 }
