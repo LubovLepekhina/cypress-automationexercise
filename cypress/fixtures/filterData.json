@@ -5,7 +5,7 @@
         "Kids": ["Dress", "Tops & Shirts"]
     },
     "synonyms": {
-        "Dress": ["dress"],
+        "Dress": ["dress", "gown"],
         "Tops": ["top"],
         "Saree": ["saree"],
         "Tshirts": ["tshirt", "t-shirt", "t shirt"],
