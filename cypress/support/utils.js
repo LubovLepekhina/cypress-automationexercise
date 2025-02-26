@@ -1,4 +1,4 @@
-
+// api functions
 export function calculateBrandQuantity(products) {
     let eachBrandQuantity = {}
     products.forEach(item => {
@@ -108,3 +108,53 @@ export function getAllProductIDs(endpoint) {
       return cy.wrap(productIDs);
     })
 }
+/**
+ * Sends a POST request to search for a product by name
+ * @param {string} endpoint The API endpoint URL for product search
+ * @param {string} productName The name of the product to search for
+ * @returns {Cypress.Chainable} - A Cypress chainable object containing the response of the request
+ */
+export function searchProductbyName(endpoint, productName) {
+    return cy.request({
+        method: 'POST', 
+        url: endpoint,
+        body: {
+            search_product: productName
+        }, 
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        failOnStatusCode: false
+    })
+}
+/**
+ * Fetches all product names from the given API endpoint.
+ * @param {string} endpoint - The API endpoint URL to retrieve products.
+ * @returns {Cypress.Chainable<string[]>} - A Cypress chainable object containing an array of product names.
+ */
+export function getAllProductName(endpoint) {
+    return cy.api({
+        method: "GET",
+        url: endpoint,
+    }).then((resp) => {
+        const respBodyObj = JSON.parse(resp.body)
+        const allProductNameList = [];
+        respBodyObj.products.forEach((product) => {
+            allProductNameList.push(product.name)
+        })
+        return cy.wrap(allProductNameList);
+        })
+    }
+
+// js helper functions
+/**
+ * /**
+ * Checks whether a product name contains at least one word from a given synonyms array.
+ * @param {string} productNameString - The product name to search within.
+ * @param {string[]} synonymsArray - An array of search terms and synonyms to match.
+ * @returns {boolean} - Returns `true` if the product name includes any word from the synonyms array, otherwise `false`.
+ */
+export const includesSearchTermOrSynonyms = (productNameString, synonymsArray) =>
+    synonymsArray.some((word) =>
+        productNameString.toLowerCase().includes(word.toLowerCase())
+    )
