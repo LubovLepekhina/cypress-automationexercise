@@ -21,6 +21,7 @@ import './commands'
 
 import 'cypress-map'
 import 'cypress-plugin-api'
+import 'cypress-mochawesome-reporter/register'
 
 //uncaught:exception
 //To conditionally turn off uncaught exception handling for a certain error

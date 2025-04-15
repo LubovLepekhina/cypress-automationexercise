@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:run:ui-tests:chrome": "npx cypress run --spec 'cypress/e2e/UI POM/*' --browser=chrome",
+    "cy:run:api-tests": "npx cypress run --spec 'cypress/e2e/api/*'"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "cypress-ajv-schema-validator": "^1.4.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-map": "^1.43.0",
+    "cypress-mochawesome-reporter": "^3.8.2",
     "cypress-plugin-api": "^2.11.2",
     "cypress-recurse": "^1.35.3",
     "dayjs": "^1.11.13"
