@@ -34,7 +34,7 @@ For more details on available test scripts, check the `scripts` section in the `
 
 For example:  
 
-`npm run test:run:chrome`
+`npm run cy:run:ui-tests:chrome`
 
 **Plugins Used:**
 

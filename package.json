@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:run:ui-tests:chrome": "npx cypress run --spec 'cypress/e2e/UI POM/*' --browser=chrome",
+    "cy:run:api-tests": "npx cypress run --spec 'cypress/e2e/api/*'"
   },
   "author": "",
   "license": "ISC",
